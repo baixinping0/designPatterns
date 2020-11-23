@@ -7,4 +7,5 @@ package com.bxp.factory;
  */
 public class RuleConfig {
 
+
 }

@@ -1,9 +1,6 @@
 package com.bxp.factory;
 
-import com.bxp.factory.parser.IRuleConfigParser;
-import com.bxp.factory.parser.JsonRuleConfigParser;
-import com.bxp.factory.parser.PropertiesRuleConfigParser;
-import com.bxp.factory.parser.XmlRuleConfigParser;
+import com.bxp.factory.parser.*;
 
 import java.io.File;
 
@@ -15,16 +12,10 @@ import java.io.File;
 public class RuleConfigSource {
     public RuleConfig load(File file){
         String fileName = file.getName();
-        IRuleConfigParser parser = null;
-        if (fileName.endsWith(".json")){
-            parser = new JsonRuleConfigParser();
-        }else if (fileName.endsWith(".xml")){
-            parser = new XmlRuleConfigParser();
-        }else if (fileName.endsWith(".properties")){
-            parser = new PropertiesRuleConfigParser();
-        }else {
-            throw new RuntimeException("");
-        }
+
+        IRuleConfigParserFactory factory = new IRuleConfigParserFactory();
+        IRuleConfigParser parser =factory.create(fileName);
+
         return parser.parse(file);
     }
 }
